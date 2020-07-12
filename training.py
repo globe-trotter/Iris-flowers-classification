@@ -7,4 +7,6 @@ import cufflinks as cf
 cf.go_offline()
 iris = pd.read_csv("W:\Iris\Iris.csv")
 iris.drop('Id',axis=1,inplace=True)
-print(iris.head())
+iris.rename(columns={'SepalLengthCm':'SepalLength','SepalWidthCm':'SepalWidth','PetalWidthCm':'PetalWidth','PetalLengthCm':'PetalLength'},inplace=True)
+sctr=px.scatter_matrix(iris,color='Species',dimensions=['SepalLength','SepalWidth','PetalWidth','PetalLength'])
+sctr.show()
