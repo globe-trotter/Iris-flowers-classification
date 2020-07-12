@@ -32,4 +32,16 @@ DT=tree.DecisionTreeClassifier()
 DT.fit(features_train,label_train)
 prediction=DT.predict(features_test)
 accuracy=accuracy_score(label_test,prediction)*100
-print(accuracy)
+# print(accuracy)
+category=['Iris-Setosa','Iris-Versicolor','Iris-Virginica']
+
+def findSpecies(sl,sw,pl,pw):
+    feature=np.array([[sl,sw,pl,pw]])
+    result=DT.predict(feature)
+    print(category[int(result[0])])
+
+sl=int(input("Enter sepal length in cm: "))
+sw=int(input("Enter sepal width in cm: "))
+pl=int(input("Enter petal length in cm: "))
+pw=int(input("Enter petal width in cm: "))
+findSpecies(sl,sw,pl,pw)
