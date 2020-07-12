@@ -4,7 +4,12 @@ import plotly
 import plotly.express as px
 import plotly.offline as pyo
 import cufflinks as cf
+from sklearn.preprocessing import LabelEncoder
 cf.go_offline()
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn import tree
+
 iris = pd.read_csv("W:\Iris\Iris.csv")
 iris.drop('Id',axis=1,inplace=True)
 iris.rename(columns={'SepalLengthCm':'SepalLength','SepalWidthCm':'SepalWidth','PetalWidthCm':'PetalWidth','PetalLengthCm':'PetalLength'},inplace=True)
@@ -13,3 +18,18 @@ iris.rename(columns={'SepalLengthCm':'SepalLength','SepalWidthCm':'SepalWidth','
 label=iris['Species']
 features=iris.drop(['Species'],axis=1)
 #print(features.head())
+encoder=LabelEncoder()
+label=encoder.fit_transform(label)
+#print(label)
+features=np.array(features)
+
+#splitting data for training and testing
+
+features_train,features_test,label_train,label_test=train_test_split(features,label,test_size=0.3,random_state=0)
+
+#decision_tree
+DT=tree.DecisionTreeClassifier()
+DT.fit(features_train,label_train)
+prediction=DT.predict(features_test)
+accuracy=accuracy_score(label_test,prediction)*100
+print(accuracy)
